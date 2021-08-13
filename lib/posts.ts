@@ -16,17 +16,19 @@ export function getSortedPostsData() {
         const matterResult = matter(fileContents)
 
         return {
-            id, 
-            ...(matterResult.data as { date: string; title: string })
+            id,
+            ...matterResult.data
         }
     })
-    return allPostsData.sort((a, b) => {
-        if (a.date < b.date) {
+    return allPostsData.sort(({ date: a }, { date: b }) => {
+        if (a < b) {
             return 1
-        } else {
+        } else if (a > b) {
             return -1
+        } else {
+            return 0
         }
-    });
+    })
 }
 
 export function getAllPostIds() {
